@@ -31,6 +31,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/transaction")
 public class TransactionController {
+    //todo: connect it to postman and share the picture request and response to me
 
     @Resource(name = "TransactionService")
     private TransactionService transactionService;
@@ -40,15 +41,15 @@ public class TransactionController {
     private AccountService accountService;
 
     @PostMapping("/newTransaction")
-    public ResponseEntity<ResponseMessage> paymentTransaction(
+    public TransactionResponseDto paymentTransaction(
             @RequestBody TransactionRequestDto transactionRequestDto) {
 
-       Account account = accountService.getAccountByaccountNumber
-               (transactionRequestDto.getAccountId());
-       if(account==null){
-
-       }
-        transactionService.SaveNewTransaction(transactionRequestDto,account);
+        Account account = accountService.getAccountByaccountNumber
+                (transactionRequestDto.getAccountId());
+        if (account == null) {
+//todo:response message
+        }
+        transactionService.SaveNewTransaction(transactionRequestDto, account);
 
         /*transactionRequestDto.setAmount(transactionRequestDto.getAmount());
         long id = transactionService.SaveNewTransaction(transaction);

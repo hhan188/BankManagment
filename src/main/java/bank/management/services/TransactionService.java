@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.crypto.Data;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service("TransactionService")
@@ -34,10 +36,20 @@ public class TransactionService {
                 transactionEntity.setStatus(Status.Fail);
                 transactionEntity.setLogResponse("Fail");
                 transactionEntity.setUpdatedate(new Date());
+                repository.save(transactionEntity);
+                return ;
                 //todo : response postman
             }
-
         }
-
+        transactionEntity.setStatus(Status.Success);
+        transactionEntity.setLogResponse("Success");
+        transactionEntity.setUpdatedate(new Date());
+        account.getTransactions().add(transactionEntity);
+        /*List<TransactionEntity> transactions = new ArrayList<>();
+        transactions.add(transactionEntity);*/
+        /*account.setTransactions(transactions);*/
+        repository.save(transactionEntity);
+        //todo : response postman
+        return ;
     }
 }
