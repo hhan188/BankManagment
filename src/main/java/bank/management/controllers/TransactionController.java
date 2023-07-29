@@ -20,10 +20,7 @@ import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -31,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/transaction")
 public class TransactionController {
 
@@ -43,17 +40,12 @@ public class TransactionController {
     private AccountService accountService;
 
     @PostMapping("/newTransaction")
-    //transaction/newTransaction
-    public ResponseEntity<ResponseMessage> paymentTransaction(@RequestParam("amount") long amount, @RequestParam("customerNumber") String customerNumber,
-                                                              @RequestParam("accountNumber") String AccountNumber
-            /*@RequestBody long amount ,@RequestBody String AccountNumber , @RequestBody String customerNumber*/) {
+    public ResponseEntity<ResponseMessage> paymentTransaction(
+            @RequestBody TransactionRequestDto transactionRequestDto) {
         String logTrack = String.valueOf(UUID.randomUUID());
+        transactionService.SaveNewTransaction(transactionRequestDto);
 
-        TransactionRequestDto transaction = new TransactionRequestDto();
-        transaction.setTransactionType(TransactionType.Payment);
-        transaction.setStatus(Status.Inprogress);
-        //transaction.setInsertdate(new Date());
-        transaction.setAmount(amount);
+        /*transactionRequestDto.setAmount(transactionRequestDto.getAmount());
         long id = transactionService.SaveNewTransaction(transaction);
         CustomerDto customer = new CustomerDto(customerNumber);
         AccountDto account = new AccountDto(AccountNumber);
@@ -89,7 +81,7 @@ public class TransactionController {
             transaction.setStatus(Status.Fail);
             transactionService.SaveOrUpdateNewTransaction(transaction);
             return ResponseEntity.status(HttpStatus.OK).body(ResponseMessage.builder().accountId(transaction.getId().toString()).build());
-        }
+        }*/
 
 
     }
@@ -97,6 +89,6 @@ public class TransactionController {
     @Data
     @Builder
     class ResponseMessage {
-        private String accountId;
+        private String paymentId;
     }
 }
