@@ -42,8 +42,10 @@ public class TransactionController {
     @PostMapping("/newTransaction")
     public ResponseEntity<ResponseMessage> paymentTransaction(
             @RequestBody TransactionRequestDto transactionRequestDto) {
-        String logTrack = String.valueOf(UUID.randomUUID());
-        transactionService.SaveNewTransaction(transactionRequestDto);
+
+       Account account= accountService.getAccountByaccountNumber
+               (transactionRequestDto.getAccountId());
+        transactionService.SaveNewTransaction(transactionRequestDto,account);
 
         /*transactionRequestDto.setAmount(transactionRequestDto.getAmount());
         long id = transactionService.SaveNewTransaction(transaction);

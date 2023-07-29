@@ -1,6 +1,7 @@
 package bank.management.services;
 
 import bank.management.models.dtos.TransactionRequestDto;
+import bank.management.models.entities.Account;
 import bank.management.models.entities.TransactionEntity;
 import bank.management.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,13 @@ public class TransactionService {
     @Autowired
     private TransactionRepository repository;
 
-    public long SaveNewTransaction(TransactionRequestDto transaction) {
+    public long SaveNewTransaction(TransactionRequestDto transaction, Account account) {
         String rrn = String.valueOf(UUID.randomUUID());//شماره پیگیری
         Date insertDate = new Date();
+
         TransactionEntity transactionEntity = new TransactionEntity();
-        transactionEntity.setAccount(transaction.getAccountId());
-        transactionEntity.setAmount();
-        repository.save()
+        transactionEntity.setAccount(account);
+        transactionEntity.setAmount(transaction.getAmount());
+        repository.save(transactionEntity);
     }
 }

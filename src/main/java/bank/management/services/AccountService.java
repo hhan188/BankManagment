@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 public class AccountService {
     @Autowired
     private AccountRepository repository;
-    public Account getAccountByaccountNumber(Account account) {
+
+    public Account getAccountByaccountNumber(Long accountId) {
+        Account account = repository.getReferenceById(accountId);
+        return account;
     }
 }
