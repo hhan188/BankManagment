@@ -43,8 +43,11 @@ public class TransactionController {
     public ResponseEntity<ResponseMessage> paymentTransaction(
             @RequestBody TransactionRequestDto transactionRequestDto) {
 
-       Account account= accountService.getAccountByaccountNumber
+       Account account = accountService.getAccountByaccountNumber
                (transactionRequestDto.getAccountId());
+       if(account==null){
+
+       }
         transactionService.SaveNewTransaction(transactionRequestDto,account);
 
         /*transactionRequestDto.setAmount(transactionRequestDto.getAmount());

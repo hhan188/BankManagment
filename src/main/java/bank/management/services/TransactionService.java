@@ -3,6 +3,8 @@ package bank.management.services;
 import bank.management.models.dtos.TransactionRequestDto;
 import bank.management.models.entities.Account;
 import bank.management.models.entities.TransactionEntity;
+import bank.management.models.enums.Status;
+import bank.management.models.enums.TransactionType;
 import bank.management.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +21,23 @@ public class TransactionService {
     public long SaveNewTransaction(TransactionRequestDto transaction, Account account) {
         String rrn = String.valueOf(UUID.randomUUID());//شماره پیگیری
         Date insertDate = new Date();
-
         TransactionEntity transactionEntity = new TransactionEntity();
         transactionEntity.setAccount(account);
         transactionEntity.setAmount(transaction.getAmount());
+        transactionEntity.setRrn(rrn);
+        transactionEntity.setInsertdate(insertDate);
+        transactionEntity.setStatus(Status.Inprogress);
+        transactionEntity.setTransactionType(transaction.getTransactionType());
         repository.save(transactionEntity);
+        if (transaction.getTransactionType() == TransactionType.Payment) {
+            if (account.getBalance() < transaction.getAmount()) {
+                transactionEntity.setStatus(Status.Fail);
+                transactionEntity.setLogResponse("Fail");
+                transactionEntity.setUpdatedate(new Date());
+                //todo : response postman
+            }
+
+        }
+
     }
 }

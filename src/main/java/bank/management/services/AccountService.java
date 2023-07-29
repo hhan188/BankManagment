@@ -7,13 +7,11 @@ import org.springframework.stereotype.Service;
 
 
 @Service("accountService")
-
 public class AccountService {
     @Autowired
     private AccountRepository repository;
 
     public Account getAccountByaccountNumber(Long accountId) {
-        Account account = repository.getReferenceById(accountId);
-        return account;
+        return repository.getReferenceById(accountId);
     }
 }

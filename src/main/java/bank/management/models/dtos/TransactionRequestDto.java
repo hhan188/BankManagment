@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class TransactionRequestDto {
     private TransactionType transactionType;
     private Long accountId;
-    private Status status;
+   // private Status status;
     private long amount;
 
 
